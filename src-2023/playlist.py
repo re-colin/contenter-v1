@@ -63,7 +63,7 @@ def retrieval(link):
                         f.write(f"Video title: {title}\n")
                         f.write(f"Video ID: {video_id} \n")
                         f.write(f"Channel ID: {channel_id} \n")
-                        f.write(f"Channepl Name: {channel_name} \n")
+                        f.write(f"Channel Name: {channel_name} \n")
                         f.write(f"Video published at: {publish_date} \n")
                         f.write(f"Date of writing file: {today} \n")
                         f.write(f"\nDescription: \n {description}\n")
