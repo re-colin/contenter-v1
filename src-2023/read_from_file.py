@@ -38,23 +38,11 @@ def read_from_file(file):
 			print(f"\n\nVideo details: {video_id}\n\n")
 
 			title = video_details['items'][0]['snippet']['title']
-			print('------------------------------------')
-
 			thumbnail_url = video_details['items'][0]['snippet']['thumbnails']['default']['url']
-			print(f"Thumbnail URL : {thumbnail_url}")
-
 			publish_date = video_details['items'][0]['snippet']['publishedAt']
-			print(f"Publish Date : {publish_date}")
-
 			description = video_details['items'][0]['snippet']['description']
-			print(f"Description : {description}")
-
 			channel_id = video_details['items'][0]['snippet']['channelId']
-			print(f"Channel ID : {channel_id}")
-
 			channel_name = video_details['items'][0]['snippet']['channelTitle']
-			print(f"Channel Name : {channel_name}")
-			print('------------------------------------')
 
 			urllib.request.urlretrieve(thumbnail_url, video_id + '.jpg')
 
@@ -72,7 +60,7 @@ def read_from_file(file):
 					f.write(f"\n\n### DESCRIPTION BREAK\n\n")
 					f.write(f"\n\n### COMMENTS START\n\n")
 			else:
-				print(f"\n\nFile with name {video_id} already exists. Skipping...\n\n")
+				print(f"\nFile with name {video_id} already exists. Skipping...\n")
 				continue
 
 			comments_request = youtube.commentThreads().list(

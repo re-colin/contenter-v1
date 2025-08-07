@@ -6,19 +6,24 @@ from pytube import YouTube
 
 
 def transcribe_video(video_link: str, whisper_model_size: str):
-	print("\n\nPreparing transcription...\n\n")
+	transcript_output_dir = os.environ['TRANSCRIPTION_OUT']
+
+	if not os.path.exists(transcript_output_dir):
+		os.mkdir(transcript_output_dir)
+
 	start = time.time()
 	cwd = os.getcwd()
 
 	model = whisper.load_model(whisper_model_size)
 
-	video_link_id = video_link['contentDetails']['videoId'] # This might be unneccessary. Just use the passed in video link and extract the video ID by parsing.
+	video_link_id = video_link['contentDetails']['videoId'] 
 	
 	video_link = f"https://www.youtube.com/watch?v={video_link_id}"
 
-	transcript_output = os.environ['TRANSCRIPTION_OUT']
+	transcript_output = f"{transcript_output_dir}/{video_link_id}"
 
 	if not os.path.exists(transcript_output):
+
 		pytube_link = YouTube(video_link)
 
 		stream = pytube_link.streams.filter(only_audio=True).first()
