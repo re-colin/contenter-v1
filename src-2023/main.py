@@ -191,7 +191,6 @@ def PlaylistCrawler(input_link):
 
 		while comments_response:
 			for item in comments_response['items']:
-
 				comment = item['snippet']['topLevelComment']['snippet']['textDisplay']
 
 				comment_author = item['snippet']['topLevelComment']['snippet']['authorDisplayName']
@@ -211,7 +210,7 @@ def PlaylistCrawler(input_link):
 
 				print(comments_index, comment, replies, end='\n\n')
 
-				with open(video_id + '.md', 'a') as f:
+				with open(video_id + '.md', 'a', encoding="utf-8") as f:
 					f.write(
 						f"{comments_index}: {comment_author} \n {comment} \n\n \tReplies: {replies}\n\n")
 				
@@ -228,7 +227,6 @@ def PlaylistCrawler(input_link):
 	end = time.time()
 	total_runtime = end - start
 	print(f"Session / Runtime completed in {total_runtime} seconds.")
-
 
 
 # Transcribes video inputs.

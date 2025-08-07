@@ -3,7 +3,16 @@ YELLOW = '\u001b[33m'
 ENDC = '\033[0m'
 
 if __name__ == "__main__":
-    thread_number = input("Enter a thread number> ")
+    print(f"""\n
+        {BLUE}
+        ==================
+        Enter a YouTube link (playlist, channel, video, ...).
+
+        Can be an absolute file path containing links to a playlist, channel or video.
+        Alternatively, pass in a single link directly. 
+        
+        {ENDC}
+    """)
 
     while (1):
         user_in = input(f"{YELLOW}> {ENDC}")

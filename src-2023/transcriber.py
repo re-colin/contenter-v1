@@ -9,7 +9,6 @@ def Transcriber(input):
 	input = os.path.join(cwd, 'src', file)
 
 	## Why does this take 13 seconds to run
-	# 2025-0805  Because its loading a model, you goof!
 	print("\n\n")
 	start = time.time()
 	model = whisper.load_model("small")
