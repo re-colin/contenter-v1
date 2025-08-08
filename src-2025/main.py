@@ -1,3 +1,6 @@
+import os
+from read_links_from_file import read_links_from_file
+
 BLUE = '\033[96m' 
 YELLOW = '\u001b[33m' 
 ENDC = '\033[0m'
@@ -20,3 +23,30 @@ if __name__ == "__main__":
         if user_in == "exit":
             print("\nEXITING")
             exit(0)
+
+        user_in_is_file = os.str(user_in).path.exists
+
+        if user_in_is_file == True: 
+            links = read_links_from_file(user_in)
+
+            for link in links:
+                if link.contains("watch?v="):
+                    pass
+
+                if link.contains("playlist?"):
+                    pass
+
+                if link.contains("@"):
+                    pass
+
+
+        # this might be kinda redundant, maybe focus on input as file
+        if user_in.contains("watch?v="):
+            pass
+
+        if user_in.contains("playlist?"):
+            pass
+
+        if user_in.contains("@"):
+            pass
+

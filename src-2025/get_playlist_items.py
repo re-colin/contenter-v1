@@ -7,8 +7,8 @@ from yt import youtube
 
 def get_playlist_items(playlist_link: str) -> list:
 
-    playlist_link = str(playlist_link).split('=')[1]
-    playlist_link = str(playlist_link).split('&')[0]
+    playlist_link = playlist_link.split('=')[1]
+    playlist_link = playlist_link.split('&')[0]
 
     videos = []
 
@@ -22,7 +22,7 @@ def get_playlist_items(playlist_link: str) -> list:
 
         playlist_items_response = playlist_items_request.execute()
 
-        videos += playlist_items_response['items']
+        videos.append(playlist_items_response['items'])
 
         next_page_token = playlist_items_response.get('nextPageToken')
 
