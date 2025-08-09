@@ -1,6 +1,5 @@
 import os
 
 video_outputs = os.environ['VIDEO_OUTPUTS']
-
-
-transcript_output_dir = os.environ['TRANSCRIPTION_OUT']
+transcript_outputs = os.environ['TRANSCRIPTION_OUT']
+json_outputs = os.environ['JSON_OUT']

@@ -23,11 +23,18 @@ if __name__ == "__main__":
     """)
 
     json_mode = False
+    transcribe_videos = False
 
-    mode_select = input(f"Use JSON Canvas output instead of Markdown? ( Y/N ){YELLOW}> {ENDC}")
+    mode_select = input(f"Use JSON Canvas output? (makes outputs viewable in Obsidian Canvas) [ Y/N ] {YELLOW}> {ENDC}")
 
     if mode_select.upper() == "Y":
         json_mode = True
+
+    mode_select = input(f"Create video transcripts? [ Y/N ]{YELLOW}> {ENDC}")
+
+    if mode_select.upper() == "Y":
+        transcribe_videos = True
+
 
     while (1):
         user_in = input(f"{YELLOW}> {ENDC}")
