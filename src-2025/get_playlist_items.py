@@ -5,6 +5,7 @@ from googleapiclient.discovery import build
 from datetime import date
 from yt import youtube
 
+# Can be used for both playlists and videos returned from a channel AS a playlist
 def get_playlist_items(playlist_link: str) -> list:
 
     playlist_link = playlist_link.split('=')[1]

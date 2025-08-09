@@ -1,4 +1,6 @@
 import os
+from get_channel import get_channel_items
+
 from read_links_from_file import read_links_from_file
 
 BLUE = '\033[96m' 

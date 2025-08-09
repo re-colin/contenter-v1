@@ -7,7 +7,7 @@ from yt import youtube
 
 from get_playlist_items import get_playlist_items
 
-def get_channel_videos(channel_link: str):
+def get_channel_items(channel_link: str):
     
     videos = [] 
 
