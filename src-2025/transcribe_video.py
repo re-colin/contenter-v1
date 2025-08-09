@@ -4,12 +4,11 @@ import whisper
 from datetime import date
 from pytube import YouTube
 
+from environment_variables import transcript_outputs
 
 def transcribe_video(video_link: str, whisper_model_size: str):
-	transcript_output_dir = os.environ['TRANSCRIPTION_OUT']
-
-	if not os.path.exists(transcript_output_dir):
-		os.mkdir(transcript_output_dir)
+	if not os.path.exists(transcript_outputs):
+		os.mkdir(transcript_outputs)
 
 	start = time.time()
 	cwd = os.getcwd()
@@ -20,9 +19,10 @@ def transcribe_video(video_link: str, whisper_model_size: str):
 	
 	video_link = f"https://www.youtube.com/watch?v={video_link_id}"
 
-	transcript_output = f"{transcript_output_dir}/{video_link_id}"
+	transcription = f"{transcript_outputs}/{video_link_id}"
+	transcription = os.path.join(transcript_outputs, video_link_id)
 
-	if not os.path.exists(transcript_output):
+	if not os.path.exists(transcription):
 
 		pytube_link = YouTube(video_link)
 
@@ -31,10 +31,10 @@ def transcribe_video(video_link: str, whisper_model_size: str):
 
 		result = model.transcribe(download)
 		
-		with open(transcript_output, 'a') as f:
+		with open(transcription, 'a') as f:
 			f.write(result["text"])
 	else:
-		print(f"\n\nTranscribed audio with name {transcript_output} already exists. Skipping...\n\n")
+		print(f"\n\nTranscribed audio with name {transcription} already exists - Skipping.\n\n")
 
 	end = time.time()
 	total_runtime = end - start

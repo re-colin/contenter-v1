@@ -4,10 +4,10 @@ import urllib.request
 from googleapiclient.discovery import build
 from datetime import date
 from yt import youtube
+from environment_variables import video_outputs
 
-video_outputs = os.environ['VIDEO_OUTPUTS']
 
-def get_video(video_link: str):
+def get_video_data(video_link: str):
     video_details = youtube.videos().list(
         part='snippet, statistics',
         id=video_link
@@ -24,7 +24,15 @@ def get_video(video_link: str):
     next_page_token = None
 
     video_file = os.path.join(video_outputs, f"{title}.md")
- 
+
+    with open(video_file + ".md", 'a', encoding="utf-8") as file:
+        file.write(f"""
+            TITLE: {title}
+            CHANNEL: {channel_name}
+            PUBLISH DATE: {publish_date}
+            DESCRIPTION: \n{description}
+        """)
+
     comments_request = youtube.commentThreads().list(
         part="snippet",
         videoId=video_link,
@@ -41,9 +49,8 @@ def get_video(video_link: str):
             if not next_page_token:
                 break
 
-            with open(video_file + '.md', 'a') as f:
-                print(f"{author_name}: {comment_text}")
-                f.write(f"\n\n{author_name}:\n{comment_text}\n")
+            with open(str(video_file) + ".md", 'a') as file:
+                file.write(f"\n\n{author_name}:\n{comment_text}\n")
                                 
     except: 
         print("\n\nComments are disabled for this video, or an exception occured.")
