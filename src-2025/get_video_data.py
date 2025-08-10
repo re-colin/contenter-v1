@@ -13,7 +13,7 @@ def get_video_data(video_link: str):
         id=video_link
     ).execute()
 
-    title = video_details['snippet']['title']
+    title = video_details['contentDetails']['videoId']['items']['snippet']['title']
     thumbnail_url = video_details['items'][0]['snippet']['thumbnails']['default']['url']
     publish_date = video_details['items'][0]['snippet']['publishedAt']
     description = video_details['items'][0]['snippet']['description']
@@ -30,7 +30,7 @@ def get_video_data(video_link: str):
             TITLE: {title}
             CHANNEL: {channel_name}
             PUBLISH DATE: {publish_date}
-            DESCRIPTION: \n{description}
+            DESCRIPTION: \n{description}\n\n
         """)
 
     comments_request = youtube.commentThreads().list(

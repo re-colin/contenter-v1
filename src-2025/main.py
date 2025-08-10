@@ -5,22 +5,29 @@ from get_video_data import get_video_data
 from read_links_from_file import read_links_from_file
 from write_outputs_to_file import write_outputs_to_file
 from write_outputs_to_json_canvas import write_outputs_to_json
+from environment_variables import video_outputs
+from environment_variables import transcript_outputs
+from pathlib import Path
 
 BLUE = '\033[96m' 
 YELLOW = '\u001b[33m' 
 ENDC = '\033[0m'
 
 if __name__ == "__main__":
-    print(f"""\n
-        {BLUE}
-        ==================
-        Enter a YouTube link (playlist, channel, video, ...).
+    print(f"""
+    {BLUE}
+    ==================
+    Enter a YouTube link (playlist, channel, video, ...).
 
-        Can be an absolute file path containing links to a playlist, channel or video.
-        Alternatively, pass in a single link directly. 
-        
-        {ENDC}
+    Can be an absolute file path containing links to a playlist, channel or video.
+    Alternatively, pass in a single link directly. 
+
+    Output directories are in {video_outputs} and {transcript_outputs}        
+    {ENDC}
     """)
+
+    if os.path.exists(video_outputs) == False:
+        os.mkdir(video_outputs)
 
     json_mode = False
     transcribe_videos = False
@@ -43,24 +50,22 @@ if __name__ == "__main__":
             print("\nEXITING")
             exit(0)
 
-        user_in_is_file = os.str(user_in).path.exists
-
-        if user_in_is_file == True: 
+        if Path(user_in).is_file() == True: 
             links = read_links_from_file(user_in)
 
             for link in links:
-                if link.contains("watch?v="):
+                if "watch?v=" in link:
                     get_video_data(link)
 
 
-                if link.contains("playlist?"):
-                    playlists = get_playlist_items(link)
-                    for playlist in playlists:
-                        
-                        vid_data = get_video_data(playlist)
+                if "playlist?" in link:
+                    playlist = get_playlist_items(link)
+                    
+                    for video in playlist:
+                        vid_data = get_video_data(video)
                         
 
-                if link.contains("@"):
+                if "@" in link:
                     channel_videos = get_channel_items(link)
                     videos = get_playlist_items(channel_videos)
 

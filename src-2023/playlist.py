@@ -102,4 +102,4 @@ def retrieval(link):
       print(f'\n\nSession runtime completed in {total_runtime} seconds. \n\n')
 
 
-retrieval('Videos.txt')
+retrieval('https://youtube.com/playlist?list=PLvPRfhd35wZr-yXqGbwRdtchywWMJDc_n')

@@ -10,8 +10,8 @@ def get_playlist_items(playlist_link: str) -> list:
 
     playlist_link = playlist_link.split('=')[1]
     playlist_link = playlist_link.split('&')[0]
-
     videos = []
+    next_page_token = None
 
     while 1:
         playlist_items_request = youtube.playlistItems().list(
