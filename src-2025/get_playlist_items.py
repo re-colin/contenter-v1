@@ -23,7 +23,7 @@ def get_playlist_items(playlist_link: str) -> list:
 
         playlist_items_response = playlist_items_request.execute()
 
-        videos.append(playlist_items_response['items'])
+        videos += playlist_items_response['items']
 
         next_page_token = playlist_items_response.get('nextPageToken')
 

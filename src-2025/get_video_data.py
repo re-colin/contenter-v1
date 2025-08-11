@@ -8,18 +8,31 @@ from environment_variables import video_outputs
 
 
 def get_video_data(video_link: str):
+
+    if isinstance(video_link, dict):
+        print("this a dict.")
+
+    video_id = video_link.split('\n')[0]
+    video_id = video_id.split('watch?v=')[1]
+    video_id = video_id.split('&si=')[0]
+#    video_id = video_link['contentDetails']['videoId']
+
+    print(video_id)
+
     video_details = youtube.videos().list(
-        part='snippet, statistics',
-        id=video_link
+        part='snippet, statistics, contentDetails',
+        id=video_id
     ).execute()
 
-    title = video_details['contentDetails']['videoId']['items']['snippet']['title']
-    thumbnail_url = video_details['items'][0]['snippet']['thumbnails']['default']['url']
+    print(video_details)
+
+    title = "No" 
+#    thumbnail_url = video_details['items'][0]['snippet']['thumbnails']['default']['url']
     publish_date = video_details['items'][0]['snippet']['publishedAt']
     description = video_details['items'][0]['snippet']['description']
     channel_id = video_details['items'][0]['snippet']['channelId']
     channel_name = video_details['items'][0]['snippet']['channelTitle']
-    urllib.request.urlretrieve(thumbnail_url, video_link + '.jpg') 
+#    urllib.request.urlretrieve(thumbnail_url, video_id + '.jpg') 
             
     next_page_token = None
 
@@ -35,7 +48,7 @@ def get_video_data(video_link: str):
 
     comments_request = youtube.commentThreads().list(
         part="snippet",
-        videoId=video_link,
+        videoId=video_id,
         maxResults=100,
         pageToken=next_page_token,
     )
@@ -49,7 +62,7 @@ def get_video_data(video_link: str):
             if not next_page_token:
                 break
 
-            with open(str(video_file) + ".md", 'a') as file:
+            with open(str(video_id) + ".md", 'a') as file:
                 file.write(f"\n\n{author_name}:\n{comment_text}\n")
                                 
     except: 

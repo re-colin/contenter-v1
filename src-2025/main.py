@@ -60,7 +60,6 @@ if __name__ == "__main__":
 
                 if "playlist?" in link:
                     playlist = get_playlist_items(link)
-                    
                     for video in playlist:
                         vid_data = get_video_data(video)
                         
