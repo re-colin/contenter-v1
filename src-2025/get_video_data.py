@@ -9,22 +9,19 @@ from environment_variables import video_outputs
 
 def get_video_data(video_link: str):
 
+    video_id = None
+    
     if isinstance(video_link, dict):
-        print("this a dict.")
-
-    video_id = video_link.split('\n')[0]
-    video_id = video_id.split('watch?v=')[1]
-    video_id = video_id.split('&si=')[0]
-#    video_id = video_link['contentDetails']['videoId']
-
-    print(video_id)
+        video_id = video_link['contentDetails']['videoId']
+    else:
+        video_id = video_link.split('\n')[0]
+        video_id = video_id.split('watch?v=')[1]
+        video_id = video_id.split('&si=')[0]
 
     video_details = youtube.videos().list(
         part='snippet, statistics, contentDetails',
         id=video_id
     ).execute()
-
-    print(video_details)
 
     title = "No" 
 #    thumbnail_url = video_details['items'][0]['snippet']['thumbnails']['default']['url']
