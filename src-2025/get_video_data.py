@@ -8,7 +8,6 @@ from environment_variables import video_outputs
 
 
 def get_video_data(video_link: str):
-
     video_id = None
     
     if isinstance(video_link, dict):
@@ -35,12 +34,12 @@ def get_video_data(video_link: str):
 
     video_file = os.path.join(video_outputs, f"{title}.md")
 
-    with open(video_file + ".md", 'a', encoding="utf-8") as file:
+    with open(video_file, 'a', encoding="utf-8") as file:
         file.write(f"""
             TITLE: {title}
             CHANNEL: {channel_name}
             PUBLISH DATE: {publish_date}
-            DESCRIPTION: \n{description}\n\n
+            DESCRIPTION: \n{description}\n\n\n
         """)
 
     comments_request = youtube.commentThreads().list(
@@ -59,7 +58,7 @@ def get_video_data(video_link: str):
             if not next_page_token:
                 break
 
-            with open(str(video_id) + ".md", 'a') as file:
+            with open(video_file, 'a') as file:
                 file.write(f"\n\n{author_name}:\n{comment_text}\n")
                                 
     except: 

@@ -55,22 +55,23 @@ if __name__ == "__main__":
 
             for link in links:
                 if "watch?v=" in link:
-                    get_video_data(link)
+                    video = get_video_data(link)
 
-
+ 
                 if "playlist?" in link:
                     playlist = get_playlist_items(link)
+                    
                     for video in playlist:
                         vid_data = get_video_data(video)
-                        
 
-                if "@" in link:
+
+                if "@" in link or link.startswith('UC'):
                     channel_videos = get_channel_items(link)
                     videos = get_playlist_items(channel_videos)
 
-                    for vid in videos:
-                        get_video_data(vid)
-
+                    for video in videos:
+                        vid_data = get_video_data(video)
+                    
 
 
         # this might be redundant, maybe focus on input as file instead
