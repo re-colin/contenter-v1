@@ -12,8 +12,11 @@ def write_outputs_to_json(
     canvas_height: int,
     canvas_type: str,   # (text, file, link, group)
     canvas_color: int = None,
-    edge_from: str = None,
-    edge_to: str = None,
+    edge_id: str = None,
+    edge_fromNode: str = None,
+    edge_toNode: str = None,
+    edge_fromSide: str = None,
+    edge_toSide: str = None,
     edge_label: str = None,
     *args
     ):
@@ -25,17 +28,32 @@ def write_outputs_to_json(
 
     if canvas_id and canvas_type:
         node_data = {
-            "id": canvas_id,
-            "type": canvas_type,
-            "x": canvas_x,
-            "y": canvas_y,
-            "width": canvas_width,
-            "height": canvas_height,
-            "color": canvas_color
+            "nodes": [ 
+                {
+                    "id": canvas_id,
+                    "type": canvas_type,
+                    "x": canvas_x,
+                    "y": canvas_y,
+                    "width": canvas_width,
+                    "height": canvas_height,
+                    "color": canvas_color
+                }
+            ],
+            "edges": [
+                {
+                    "id": edge_id,
+                    "fromNode": edge_fromNode,
+                    "toNode": edge_toNode,
+                    "fromSide": edge_fromSide,
+                    "toSide": edge_toSide,
+                    "label": edge_label 
+                }
+            ]
         }
+
         node_data = {k: v for k, v in node_data.items() if v is not None}
         data["nodes"].append(node_data)
 
-    with open(json_file, 'a') as file:
-        # whatever writing needs to go in here...
-        pass 
+
+    with open(json_file, 'a', encoding="utf-8") as file:
+        json.dump(node_data, file) 

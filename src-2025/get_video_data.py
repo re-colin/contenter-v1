@@ -31,12 +31,12 @@ def get_video_data(video_link: str):
     video_file = os.path.join(video_outputs, f"{video_id}.md")
     
     for video in video_details.get('items', []):
-        with open(video_file, 'a', encoding="utf-8") as file:
-            file.write(f"""CREATOR: { video['snippet']['channelTitle'] }\n
-                TITLE: { video['snippet']['title']  }\n
-                DURATION: { video['contentDetails']['duration'] }\n
-                PUBLISH DATE: { video['snippet']['publishedAt'] }\n
-                THUMBNAIL: { video['snippet']['thumbnails']['default']['url'] }\n
+        with open(video_file, 'w', encoding="utf-8") as file:
+            file.write(f"""CREATOR: { video['snippet']['channelTitle'] }
+                TITLE: { video['snippet']['title']  }
+                DURATION: { video['contentDetails']['duration'] }
+                PUBLISH DATE: { video['snippet']['publishedAt'] }
+                THUMBNAIL: { video['snippet']['thumbnails']['default']['url'] }
                 DESCRIPTION: { video['snippet']['description'] }\n\n""")
 
         next_page_token = None
