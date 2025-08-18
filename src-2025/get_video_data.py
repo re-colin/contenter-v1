@@ -3,6 +3,7 @@ from yt import youtube
 from environment_variables import video_outputs
 from write_outputs_to_json_canvas import write_outputs_to_json
 
+
 # Made to support raw string links
 def get_video_data(video_link: str):
 
@@ -30,41 +31,41 @@ def get_video_data(video_link: str):
 
     video_file = os.path.join(video_outputs, f"{video_id}.md")
     
-    for video, index in enumerate(video_details.get('items', [])):
-        with open(video_file, 'w', encoding="utf-8") as file:
-            file.write(f"""CREATOR: { video['snippet']['channelTitle'] }
-                TITLE: { video['snippet']['title']  }
-                DURATION: { video['contentDetails']['duration'] }
-                PUBLISH DATE: { video['snippet']['publishedAt'] }
-                THUMBNAIL: { video['snippet']['thumbnails']['default']['url'] }
-                DESCRIPTION: { video['snippet']['description'] }\n\n""")
+    index = 1
+    for video in video_details.get('items', []):
+        # with open(video_file, 'w', encoding="utf-8") as file:
+        #     file.write(f"""
+        #         CREATOR: { video['snippet']['channelTitle'] }
+        #         TITLE: { video['snippet']['title']  }
+        #         DURATION: { video['contentDetails']['duration'] }
+        #         PUBLISH DATE: { video['snippet']['publishedAt'] }
+        #         THUMBNAIL: { video['snippet']['thumbnails']['default']['url'] }
+        #         DESCRIPTION: { video['snippet']['description'] }\n\n""")
+
+        title = video['snippet']['title']
+        duration = video['contentDetails']['duration']
+        publish_date = video['snippet']['publishedAt']
+        description = video['snippet']['description']
+
+        video_data_info = f"""
+            TITLE: {title}
+            DURATION: {duration}
+            publish_date: {publish_date}
+            description: {description}
+        """
             
-        
-            title = video['snippet']['title']
-            duration = video['contentDetails']['duration']
-            publish_date = video['snippet']['publishedAt']
-            description = video['snippet']['description']
-
-            video_data_info = f"""
-                TITLE: {title}
-                DURATION: {duration}
-                publish_date: {publish_date}
-                description: {description}
-            """
-                
-            # Write video data to .canvas file
-            write_outputs_to_json(  
-                file_name= video_link,
-                card_text= video_data_info,
-                canvas_type= 'text',
-                canvas_id= f'V{index}',
-                canvas_x= 0,
-                canvas_y= 0,
-                canvas_width= 200,
-                canvas_height= 300,
-                canvas_color= 2
-            )
-
+        # Write video data to .canvas file
+        write_outputs_to_json(  
+            file_name= video_link,
+            card_text= video_data_info,
+            canvas_type= 'text',
+            canvas_id= f'V{index}',
+            canvas_x= 10,
+            canvas_y= 10,
+            canvas_width= 200,
+            canvas_height= 300,
+            canvas_color= "6"
+        )
 
         next_page_token = None
         
@@ -76,7 +77,7 @@ def get_video_data(video_link: str):
         )
 
         comments_response = comments_request.execute()
-        
+    
 
         for comment in comments_response['items']:
             author_name = comment['snippet']['topLevelComment']['snippet']['authorDisplayName']
