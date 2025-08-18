@@ -3,7 +3,6 @@ from get_channel_items import get_channel_items
 from get_playlist_items import get_playlist_items
 from get_video_data import get_video_data
 from read_links_from_file import read_links_from_file
-from write_outputs_to_file import write_outputs_to_file
 from write_outputs_to_json_canvas import write_outputs_to_json
 from environment_variables import video_outputs
 from environment_variables import transcript_outputs
@@ -32,12 +31,12 @@ if __name__ == "__main__":
     json_mode = False
     transcribe_videos = False
 
-    mode_select = input(f"Use JSON Canvas output? (makes outputs viewable in Obsidian Canvas) [ Y/N ] {YELLOW}> {ENDC}")
+    mode_select = input(f"\nUse JSON Canvas output? (makes outputs viewable in Obsidian Canvas) [ Y/N ] {YELLOW}> {ENDC}")
 
     if mode_select.upper() == "Y":
         json_mode = True
 
-    mode_select = input(f"Create video transcripts? [ Y/N ]{YELLOW}> {ENDC}")
+    mode_select = input(f"\nCreate video transcripts? [ Y/N ]{YELLOW}> {ENDC}")
 
     if mode_select.upper() == "Y":
         transcribe_videos = True
@@ -45,7 +44,7 @@ if __name__ == "__main__":
 
     while (1):
         user_in = input(f"{YELLOW}> {ENDC}")
-        
+
         if user_in == "exit":
             print("\nEXITING")
             exit(0)
@@ -54,18 +53,6 @@ if __name__ == "__main__":
             links = read_links_from_file(user_in)
 
             for link in links:
-                if "watch?v=" in link:
-                    vid_data = get_video_data(link)
-                    print(vid_data)
-
- 
-                if "playlist?" in link:
-                    playlist = get_playlist_items(link)
-
-                    for video in playlist:
-                        vid_data = get_video_data(video)
-                    
-
                 if "@" in link or link.startswith('UC'):
                     channel_videos_list = get_channel_items(link)
 
@@ -73,7 +60,19 @@ if __name__ == "__main__":
 
                     for video in channel_video_uploads:
                         vid_data = get_video_data(video)
-                    
+
+
+                if "playlist?" in link:
+                    playlist = get_playlist_items(link)
+
+                    for video in playlist:
+                        vid_data = get_video_data(video)
+
+
+                if "watch?v=" in link:
+                    vid_data = get_video_data(link)
+
+                   
 
 
     # this might be redundant, maybe focus on input as file instead
