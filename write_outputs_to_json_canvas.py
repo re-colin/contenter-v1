@@ -23,11 +23,13 @@ def write_outputs_to_json(
     ):
 
     json_file = os.path.join(json_outputs, f"{file_name}.canvas")
+    
+    with open(json_file, 'r', encoding="utf-8") as file:
+        node_data = json.load(file)
+        print(node_data)
 
     if canvas_id and canvas_type:
-        node_data = {
-            "nodes": [ 
-                {
+        node_object = {
                     "id": canvas_id,
                     "type": canvas_type,
                     "x": canvas_x,
@@ -37,8 +39,7 @@ def write_outputs_to_json(
                     "text": card_text,
                     "color": canvas_color
                 }
-            ]
-        }
+        
 
         if edge_id:
             pass
@@ -53,6 +54,9 @@ def write_outputs_to_json(
             #     }
             # ]
 
+    node_data['nodes'].append(node_object)
 
-    with open(json_file, 'a+', encoding="utf-8") as file:
+    print(f"NODE OBJECT {node_data}")
+
+    with open(json_file, 'w', encoding="utf-8") as file:
         json.dump(node_data, file) 
