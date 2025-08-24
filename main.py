@@ -28,15 +28,9 @@ if __name__ == "__main__":
     if os.path.exists(video_outputs) == False:
         os.mkdir(video_outputs)
 
-    json_mode = False
     transcribe_videos = False
 
-    mode_select = input(f"\nUse JSON Canvas output? (makes outputs viewable in Obsidian Canvas) [ Y/N ] {YELLOW}> {ENDC}")
-
-    if mode_select.upper() == "Y":
-        json_mode = True
-
-    mode_select = input(f"\nCreate video transcripts? [ Y/N ]{YELLOW}> {ENDC}")
+    mode_select = input(f"\nCreate video transcriptions alongside comments/metadata? [ Y/N ]{YELLOW}> {ENDC}")
 
     if mode_select.upper() == "Y":
         transcribe_videos = True
@@ -59,18 +53,18 @@ if __name__ == "__main__":
                     channel_video_uploads = get_playlist_items(channel_videos_list)
 
                     for video in channel_video_uploads:
-                        vid_data = get_video_data(video)
+                        vid_data = get_video_data(video, transcribe_videos)
 
 
                 if "playlist?" in link:
                     playlist = get_playlist_items(link)
 
                     for video in playlist:
-                        vid_data = get_video_data(video)
+                        vid_data = get_video_data(video, transcribe_videos)
 
 
                 if "watch?v=" in link:
-                    vid_data = get_video_data(link)
+                    vid_data = get_video_data(link, transcribe_videos)
 
                    
 

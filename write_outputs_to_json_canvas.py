@@ -26,7 +26,7 @@ def write_outputs_to_json(
     
     with open(json_file, 'r', encoding="utf-8") as file:
         node_data = json.load(file)
-        print(node_data)
+        # print(node_data)
 
     if canvas_id and canvas_type:
         node_object = {
@@ -56,7 +56,7 @@ def write_outputs_to_json(
 
     node_data['nodes'].append(node_object)
 
-    print(f"NODE OBJECT {node_data}")
+    # print(f"NODE OBJECT {node_data}")
 
     with open(json_file, 'w', encoding="utf-8") as file:
         json.dump(node_data, file) 
