@@ -4,6 +4,10 @@ from yt import youtube
 from environment_variables import video_outputs, json_outputs
 from write_outputs_to_json_canvas import write_outputs_to_json
 from calculate_nodes import calculate_node_size
+from main import transcribe_videos
+
+if transcribe_videos == True:
+    from transcribe_video import transcribe_video
 
 
 # Made to support raw string links
@@ -129,9 +133,6 @@ def get_video_data(video_link: str, is_transcription_mode_enabled: bool):
 
     if is_transcription_mode_enabled == True:
         
-        from transcribe_video import transcribe_video
-        print("library loaded. transcribing...")
-
         video_transcription = transcribe_video(video_id, "small")
 
         print(video_transcription)
