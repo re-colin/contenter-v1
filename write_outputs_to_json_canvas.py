@@ -5,13 +5,13 @@ json_outputs = os.environ['JSON_OUT']
 
 def write_outputs_to_json(
     file_name: str,
-    card_text: str, 
     canvas_type: str,   # (text, file, link, group)
     canvas_id: str,
     canvas_x: int,
     canvas_y: int,
     canvas_width: int,
     canvas_height: int,
+    card_text: str = None, 
     canvas_color: str = None,
     edge_id: str = None,
     edge_fromNode: str = None,

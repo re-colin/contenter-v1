@@ -71,8 +71,8 @@ def get_video_data(video_link: str, is_transcription_mode_enabled: bool):
             canvas_id= f'V{curr_node_id}',
             canvas_x= 1700,
             canvas_y= 0,
-            canvas_width= 800,
-            canvas_height= 1000,
+            canvas_width= calculate_node_size(video_data_info)[1],
+            canvas_height= calculate_node_size(video_data_info)[0],
             canvas_color= "2"
         )
 
@@ -88,6 +88,7 @@ def get_video_data(video_link: str, is_transcription_mode_enabled: bool):
 
         comments_response = comments_request.execute()
 
+        x_offset_counter = 0
         for comment in comments_response['items']:
             author_name = comment['snippet']['topLevelComment']['snippet']['authorDisplayName']
             comment_text = comment['snippet']['topLevelComment']['snippet']['textOriginal']
@@ -98,6 +99,8 @@ def get_video_data(video_link: str, is_transcription_mode_enabled: bool):
             if not next_page_token:
                 break
 
+            canvas_y += calculate_node_size(comment_full)[0] + 70
+            
             # Write video comments data to .canvas file
             write_outputs_to_json(
                 file_name= video_id,
@@ -105,18 +108,20 @@ def get_video_data(video_link: str, is_transcription_mode_enabled: bool):
                 canvas_type= 'text',
                 canvas_id= f'V{curr_node_id}',
                 canvas_x= canvas_x,
-                canvas_y= canvas_y,
-                canvas_width= 300,
-                canvas_height= 200,
+                canvas_y= canvas_y, 
+                canvas_width= calculate_node_size(comment_full)[1],
+                canvas_height= calculate_node_size(comment_full)[0] + 15,
                 canvas_color= "4"
             )
 
             curr_node_id += 1
-            canvas_y += 400
 
-            if canvas_y == 2000:
+            x_offset_counter += 1
+
+            if x_offset_counter == 10:
+                canvas_x += 450
                 canvas_y = 0
-                canvas_x += 400
+                x_offset_counter = 0;
                                 
         if not next_page_token: 
             break
@@ -138,8 +143,8 @@ def get_video_data(video_link: str, is_transcription_mode_enabled: bool):
             canvas_id= f'V{curr_node_id}',
             canvas_x= 100,
             canvas_y= 0,
-            canvas_width= 800,
-            canvas_height= 1000,
+            canvas_width= calculate_node_size(video_transcription)[1],
+            canvas_height= calculate_node_size(video_transcription)[0],
             canvas_color= "7"
         )
 

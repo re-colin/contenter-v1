@@ -1,7 +1,8 @@
-
 def calculate_node_size(text: str):
     text_length = len(text)
-    node_size_y = text_length * 3
-    node_size_x = node_size_y + 200
+    node_size_height = text_length - (text_length / 3)
+    node_size_width = 400
 
-    return node_size_y, node_size_x 
+    node_position_y = node_size_height + 20 
+
+    return node_size_height, node_size_width, node_position_y

@@ -62,5 +62,5 @@ if errorlevel 1 (
     exit /b 1
 )
 
-cd contenter-v1/src-2025
+cd contenter-v1
 call python main.py
