@@ -27,7 +27,7 @@ def transcribe_video(video_id: str, whisper_model_size: str):
 
 		stream = pytube_link.streams.get_audio_only() 
 		
-		download = stream.download()
+		download = stream.download(output_path="Video Downloads")
 
 		result = model.transcribe(download)
 		

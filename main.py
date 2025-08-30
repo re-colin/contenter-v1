@@ -31,6 +31,9 @@ if __name__ == "__main__":
     transcribe_videos = False
 
     mode_select = input(f"\nCreate video transcriptions alongside comments/metadata? [ Y/N ]{YELLOW}> {ENDC}")
+    
+    if transcribe_videos == True:
+        from transcribe_video import transcribe_video
 
     if mode_select.upper() == "Y":
         transcribe_videos = True
