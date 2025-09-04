@@ -34,12 +34,16 @@ def get_video_data(video_link: str, is_transcription_mode_enabled: bool):
         id=video_id
     ).execute()
 
-    # video_file = os.path.join(video_outputs, f"{video_id}.md")
-    json_file = os.path.join(json_outputs, f"{video_id}.canvas")
-
-    node_object = { "nodes": [] }
-
     for video in video_details.get('items', []):
+        title = video['snippet']['title']
+        creator = video['snippet']['channelTitle']
+
+        json_file = os.path.join(json_outputs, f"{creator} - {title}.canvas")
+
+        print(json_file)
+
+        node_object = { "nodes": [] }
+
         with open(json_file, 'w+', encoding="utf-8") as file:
             json.dump(node_object, file)
 
@@ -65,7 +69,7 @@ def get_video_data(video_link: str, is_transcription_mode_enabled: bool):
 
         # Write video data to .canvas file
         write_outputs_to_json(  
-            file_name= video_id,
+            file_name= f"{creator} - {title}",
             card_text= video_data_info,
             canvas_type= 'text',
             canvas_id= f'V{curr_node_id}',
@@ -103,7 +107,7 @@ def get_video_data(video_link: str, is_transcription_mode_enabled: bool):
             
             # Write video comments data to .canvas file
             write_outputs_to_json(
-                file_name= video_id,
+                file_name= f"{creator} - {title}",
                 card_text= comment_full,
                 canvas_type= 'text',
                 canvas_id= f'V{curr_node_id}',
@@ -134,7 +138,7 @@ def get_video_data(video_link: str, is_transcription_mode_enabled: bool):
         print(video_transcription)
 
         write_outputs_to_json(  
-            file_name= video_id,
+            file_name= f"{creator} - {title}",
             card_text= f"# TRANSCRIPT \n{video_transcription}", 
             canvas_type= 'text',
             canvas_id= f'V{curr_node_id}',
